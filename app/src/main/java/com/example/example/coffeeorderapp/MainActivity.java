@@ -7,6 +7,8 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.TextView;
 
+import java.security.PrivateKey;
+
 public class MainActivity extends AppCompatActivity {
     int quantity = 0;
 
@@ -18,27 +20,45 @@ public class MainActivity extends AppCompatActivity {
 
     //this method called when the order button is clicked
     public void submitOrder(View view) {
-       displayPrice(quantity * 50000);
+        int price = calculatePrice();
+        String priceMessage = createOrderSummary(price);
+        displayMessage(priceMessage);
+    }
+
+    private int calculatePrice (){
+        int price = quantity * 50000;
+        return price;
+    }
+
+    private String createOrderSummary(int price){
+        String priceMessage = "Name : Hilda";
+        priceMessage = priceMessage + "\nQuantity : " + quantity ;
+        priceMessage = priceMessage + "\nTotal : Rp. " + price ;
+        priceMessage = priceMessage + "\nThank you!";
+        return priceMessage;
     }
 
     //display the given quantity value on the screen
-    private void display(int number) {
+    private void displayQuantity(int number) {
         TextView quantity = (TextView) findViewById(R.id.quantity_textview);
         quantity.setText("" + number);
     }
 
-    private void displayPrice(int number) {
-        TextView priceTextView = (TextView) findViewById(R.id.price_tv);
-        priceTextView.setText("" + number);
-    }
-
     public void increament(View view) {
         quantity = quantity + 1;
-        display(quantity);
+        displayQuantity(quantity);
     }
 
     public void decreament(View view) {
         quantity = quantity - 1;
-        display(quantity);
+        displayQuantity(quantity);
     }
+
+    private void displayMessage(String message){
+        TextView prieTextView = (TextView) findViewById(R.id.order_summary_textview);
+        prieTextView.setText(message);
+    }
+
+
+
 }
