@@ -1,6 +1,8 @@
 package com.example.example.coffeeorderapp;
 
+import android.content.Intent;
 import android.icu.text.NumberFormat;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,7 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
         int price = calculatePrice(hasWhippedCream,hasChocolate);
         String priceMessage = createOrderSummary(name, price, hasWhippedCream, hasChocolate);
-        displayMessage(priceMessage);
+        //displayMessage(priceMessage);
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:"));
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Just Java orser for " + name);
+        intent.putExtra(Intent.EXTRA_TEXT, priceMessage);
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }
+
     }
 
     private int calculatePrice (boolean addWhippedCream, boolean addChocolate){
@@ -90,7 +101,4 @@ public class MainActivity extends AppCompatActivity {
         TextView priceTextView = (TextView) findViewById(R.id.order_summary_textview);
         priceTextView.setText(message);
     }
-
-
-
 }
