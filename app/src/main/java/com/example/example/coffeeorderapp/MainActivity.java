@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.PrivateKey;
 
@@ -68,11 +69,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void increament(View view) {
+        if (quantity == 5){
+            Toast.makeText(this, "You cannot have more than 5 coffees", Toast.LENGTH_SHORT).show();
+            return;
+        }
         quantity = quantity + 1;
         displayQuantity(quantity);
     }
 
     public void decreament(View view) {
+        if (quantity == 0){
+            Toast.makeText(this, "You cannot have less than 1 coffee", Toast.LENGTH_SHORT).show();
+            return;
+        }
         quantity = quantity - 1;
         displayQuantity(quantity);
     }
