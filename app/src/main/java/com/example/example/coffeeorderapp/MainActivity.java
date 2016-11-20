@@ -3,8 +3,10 @@ package com.example.example.coffeeorderapp;
 import android.icu.text.NumberFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.security.PrivateKey;
@@ -20,8 +22,14 @@ public class MainActivity extends AppCompatActivity {
 
     //this method called when the order button is clicked
     public void submitOrder(View view) {
+        CheckBox whippedCreamCheckBox = (CheckBox) findViewById(R.id.whipped_crem_checkbox);
+        CheckBox chocolate = (CheckBox) findViewById(R.id.chocolate_checkbox);
+        boolean hasWhippedCream = whippedCreamCheckBox.isChecked();
+        boolean hasChocolate =  chocolate.isChecked();
+        Log.d("whipped cream", String.valueOf(hasWhippedCream));
+
         int price = calculatePrice();
-        String priceMessage = createOrderSummary(price);
+        String priceMessage = createOrderSummary(price, hasWhippedCream, hasChocolate);
         displayMessage(priceMessage);
     }
 
@@ -30,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
         return price;
     }
 
-    private String createOrderSummary(int price){
+    private String createOrderSummary(int price, boolean addWhippedcream, boolean addChocolate){
         String priceMessage = "Name : Hilda";
+        priceMessage = priceMessage + "\n Add whipped cream ? " + addWhippedcream;
+        priceMessage = priceMessage + "\n Add chocolate ? " + addChocolate;
         priceMessage = priceMessage + "\nQuantity : " + quantity ;
         priceMessage = priceMessage + "\nTotal : Rp. " + price ;
         priceMessage = priceMessage + "\nThank you!";
@@ -55,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayMessage(String message){
-        TextView prieTextView = (TextView) findViewById(R.id.order_summary_textview);
-        prieTextView.setText(message);
+        TextView priceTextView = (TextView) findViewById(R.id.order_summary_textview);
+        priceTextView.setText(message);
     }
 
 
